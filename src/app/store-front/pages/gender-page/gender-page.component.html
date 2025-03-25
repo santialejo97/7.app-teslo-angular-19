@@ -9,7 +9,11 @@
 >
   @for (product of this.productsGenderResource.value()?.products; track
   product.id) {
-
   <product-card [product]="product"></product-card>
   }
 </div>
+
+<shared-pagination
+  [pages]="this.productsGenderResource.value()?.pages ?? 0"
+  [currentPage]="this.paginationService.getCurrentPage"
+></shared-pagination>

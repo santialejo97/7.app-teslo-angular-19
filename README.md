@@ -9,3 +9,4 @@ DESPLIEGUE
 3. Ingresar la informacion de las variables de entorno `export const environment = {
   baseUrl: 'http://localhost:3000/api',
 };`
+4. levandar el servidor de angular con el comando `ng serve`
