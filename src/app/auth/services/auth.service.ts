@@ -31,6 +31,8 @@ export class AuthService {
 
   user = computed<User | null>(() => this._user());
 
+  userRoles = computed(() => this._user()?.roles);
+
   token = computed(this._token);
 
   login(email: string, password: string): Observable<boolean> {
@@ -73,6 +75,9 @@ export class AuthService {
       this.logout();
       return of(false);
     }
+
+    // TODO Crear cache de checkstatus con limpieza
+
     return this.http.get<AuthResponse>(`${baseUrl}/auth/check-status`, {}).pipe(
       tap((resp) => {
         console.log(resp);

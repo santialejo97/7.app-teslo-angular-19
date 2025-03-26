@@ -1,4 +1,6 @@
-import { Component, input } from '@angular/core';
+import { Component, input, OnInit, signal } from '@angular/core';
+
+export type Alerts = 'error' | 'success' | 'info';
 
 @Component({
   selector: 'app-alert',
@@ -7,4 +9,5 @@ import { Component, input } from '@angular/core';
 })
 export class AlertComponent {
   description = input.required<string>();
+  typeAlert = input.required<Alerts>();
 }
