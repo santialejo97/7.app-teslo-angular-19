@@ -87,7 +87,10 @@
 
 @if (hasError()) {
 
-<app-alert description="Por favor revise la informaciòn ingresada."></app-alert>
+<app-alert
+  description="Por favor revise la informaciòn ingresada."
+  [typeAlert]="'error'"
+></app-alert>
 }
 
 <!-- <pre>{{ loginForm.controls["password"].errors | json }}</pre> -->

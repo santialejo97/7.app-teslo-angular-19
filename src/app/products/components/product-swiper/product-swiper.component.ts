@@ -3,6 +3,8 @@ import {
   Component,
   ElementRef,
   input,
+  OnChanges,
+  SimpleChanges,
   viewChild,
 } from '@angular/core';
 // import Swiper JS
@@ -20,16 +22,33 @@ import { ProductImagePipe } from '@products/pipes/product-image.pipe';
   templateUrl: './product-swiper.component.html',
   styleUrl: './product-swiper.component.css',
 })
-export class ProductSwiperComponent implements AfterViewInit {
+export class ProductSwiperComponent implements AfterViewInit, OnChanges {
   images = input.required<string[]>();
   elementDiv = viewChild.required<ElementRef>('swiperDiv');
+  swiper: Swiper | undefined = undefined;
 
   ngAfterViewInit(): void {
+    this.swiperInit();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['images'].firstChange) return;
+    if (!this.swiper) return;
+    this.swiper.destroy(true, true);
+    const paginationEl =
+      this.elementDiv().nativeElement?.querySelector('.swiper-pagination');
+    console.log(paginationEl);
+    paginationEl.innerHTML = '';
+    setTimeout(() => {
+      this.swiperInit();
+    }, 100);
+  }
+
+  swiperInit() {
     const element = this.elementDiv().nativeElement;
     if (!element) return;
-    console.log({ element });
-    console.log(this.images());
-    const swiper = new Swiper(element, {
+
+    this.swiper = new Swiper(element, {
       // Optional parameters
       direction: 'horizontal',
       loop: true,

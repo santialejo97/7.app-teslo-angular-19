@@ -5,6 +5,7 @@ export class FormUtil {
   static namePattern = '([a-zA-Z]+) ([a-zA-Z]+)';
   static passwordPattern =
     '^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[$@$!%*?&])([A-Za-zd$@$!%*?&]|[^ ]){8,15}$';
+  static slugPattern = '^[a-z0-9_]+(?:-[a-z0-9_]+)*$';
 
   static isValidField(fieldName: string, form: FormGroup): boolean | null {
     return (

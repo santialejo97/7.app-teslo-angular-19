@@ -7,7 +7,15 @@ const baseUrl = environment.baseUrl;
   name: 'ProductImage',
 })
 export class ProductImagePipe implements PipeTransform {
-  transform(value: string[] | string): string {
+  transform(value: string[] | string | null): string {
+    if (value === null) {
+      return './assets/images/no-image.webp';
+    }
+
+    if (typeof value === 'string' && value.startsWith('blob')) {
+      return value;
+    }
+
     if (typeof value == 'string') {
       return `${baseUrl}/files/product/${value}`;
     }
@@ -15,7 +23,7 @@ export class ProductImagePipe implements PipeTransform {
     const image = value.at(0);
 
     if (!image) {
-      return './public/assets/images/no-image.webp';
+      return './assets/images/no-image.webp';
     }
 
     return `${baseUrl}/files/product/${value[0]}`;

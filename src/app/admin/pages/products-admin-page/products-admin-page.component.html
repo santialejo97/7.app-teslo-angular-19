@@ -1,0 +1,43 @@
+<h1 class="text-3xl font-bold font-montserrat mb-2">Listado de productos</h1>
+
+<h3 class="font-montserrat text-lg">
+  Total de productos :
+  <span class="text-accent">{{ this.productsResource.value()?.count }}</span>
+</h3>
+<div class="divider"></div>
+
+<div class="flex items-center gap-2 h-20">
+  <shared-pagination
+    [pages]="this.productsResource.value()?.pages ?? 0"
+    [currentPage]="this.paginationService.getCurrentPage"
+  ></shared-pagination>
+  <select
+    class="select select-bordered w-32"
+    (change)="this.productsPage.set(+selectPage.value)"
+    #selectPage
+  >
+    <option value="10">10</option>
+    <option value="20">20</option>
+    <option value="50">50</option>
+    <option value="100">100</option>
+  </select>
+
+  <div class="flex flex-1">
+    <button [routerLink]="['/admin/product', 'new']" class="btn btn-secondary">
+      Nuevo Producto
+    </button>
+  </div>
+</div>
+
+@if (this.productsResource.hasValue()) {
+<products-table
+  [products]="this.productsResource.value().products"
+></products-table>
+}
+<!--  -->
+@else {
+<div class="flex justify-center items-center">
+  <span class="loading loading-infinity loading-xl"></span>
+</div>
+
+}
