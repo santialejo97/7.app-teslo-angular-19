@@ -160,9 +160,25 @@
       </button>
     </div>
 
-    <product-swiper [images]="product().images" />
+    <product-swiper [images]="this.swiperImage()" />
 
-    <input type="file" class="file-input file-input-bordered w-full mt-4" />
+    <input
+      type="file"
+      multiple
+      accept="image/*"
+      class="file-input file-input-bordered w-full mt-4"
+      (change)="onFilesChanged($event)"
+    />
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
+      @for (image of this.imagesUrls(); track image) {
+      <img
+        [src]="image"
+        alt="temporal"
+        class="w-full h-[100px] object-cover rounded-2xl"
+      />
+      }
+    </div>
   </div>
 </form>
 

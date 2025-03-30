@@ -1,4 +1,11 @@
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  input,
+  OnInit,
+  signal,
+} from '@angular/core';
 import type { Product } from '@products/interfaces/product.interfaces';
 import { ProductSwiperComponent } from '@products/components/product-swiper/product-swiper.component';
 import {
@@ -8,7 +15,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { FormUtil } from '@shared/utils/form-util';
-import { firstValueFrom, map } from 'rxjs';
+import { every, firstValueFrom, map } from 'rxjs';
 import { ProductsService } from '@products/services/products.service';
 import { Router } from '@angular/router';
 import {
@@ -52,6 +59,15 @@ export class ProductDetailsComponent implements OnInit {
   typeAlert = signal<Alerts>('success');
   hasSuccess = signal(false);
 
+  // imageUrl
+
+  imagesUrls = signal<string[]>([]);
+  imageFileList: FileList | undefined = undefined;
+  swiperImage = computed(() => [
+    ...this.product().images,
+    ...this.imagesUrls(),
+  ]);
+
   ngOnInit(): void {
     this.setFormValue(this.product());
   }
@@ -92,7 +108,7 @@ export class ProductDetailsComponent implements OnInit {
     };
     if (this.product().id == 'new') {
       const product = await firstValueFrom(
-        this.productService.createProduct(productLike)
+        this.productService.createProduct(productLike, this.imageFileList)
       );
       this.router.navigate(['/admin/product', product.id]);
       this.messageAlert.set('Producto Creado correctamente');
@@ -100,7 +116,11 @@ export class ProductDetailsComponent implements OnInit {
       this.clearAlert();
     } else {
       await firstValueFrom(
-        this.productService.updateProduct(productLike, this.product().id)
+        this.productService.updateProduct(
+          productLike,
+          this.product().id,
+          this.imageFileList
+        )
       );
       this.messageAlert.set('Producto actualizado correctamente');
       this.hasSuccess.set(true);
@@ -112,5 +132,21 @@ export class ProductDetailsComponent implements OnInit {
     setTimeout(() => {
       this.hasSuccess.set(false);
     }, 2000);
+  }
+
+  // File upload
+
+  onFilesChanged(event: Event) {
+    this.imagesUrls.set([]);
+    const fileList = (event?.target as HTMLInputElement).files;
+    this.imageFileList = fileList!;
+
+    this.product().images = [...this.product().images];
+    const imageUrls = Array.from(fileList ?? []).map((file) =>
+      URL.createObjectURL(file)
+    );
+
+    console.log({ imageUrls });
+    this.imagesUrls.set(imageUrls);
   }
 }
