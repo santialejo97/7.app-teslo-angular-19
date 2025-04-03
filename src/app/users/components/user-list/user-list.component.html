@@ -1,0 +1,81 @@
+<ul class="list bg-base-100 rounded-box shadow-md">
+  <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">
+    Most played songs this week
+  </li>
+
+  @for (user of this.users(); track user.id) {
+  <li class="list-row">
+    <div>
+      <img class="size-10 rounded-box" [src]="null | UserImage" />
+    </div>
+    <div>
+      <div
+        class="flex text-xl gap-1 items-center mb-1 font-extrabold font-montserrat"
+      >
+        {{ user.fullName }} :
+        <span class="text-sm text-primary font-montserrat">
+          {{ user.roles.join(" , ") }}</span
+        >
+      </div>
+      <div class="text-xs uppercase font-semibold opacity-60">
+        {{ user.email }}
+      </div>
+      <div class="inline-grid *:[grid-area:1/1]">
+        <div
+          class="status animate-ping"
+          [ngClass]="{
+            'status-primary': user.isActive == true,
+            'status-warning': user.isActive == false
+          }"
+        ></div>
+        <div
+          class="status"
+          [ngClass]="{
+            'status-primary': user.isActive == true,
+            'status-warning': user.isActive == false
+          }"
+        ></div>
+      </div>
+
+      {{ user.isActive ? "Habilitado" : "Deshabilitado" }}
+    </div>
+    <a
+      class="btn btn-square btn-ghost hover:bg-accent"
+      [routerLink]="['/admin/users', user.id]"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+      >
+        <path
+          fill="currentColor"
+          d="M4 19v-1.8q0-.85.438-1.562T5.6 14.55q1.55-.775 3.15-1.162T12 13q.925 0 1.825.113t1.8.362l-1.675 1.7q-.5-.075-.975-.125T12 15q-1.4 0-2.775.338T6.5 16.35q-.225.125-.363.35T6 17.2v.8h6v2H5q-.425 0-.712-.288T4 19m10 1v-1.25q0-.4.163-.763t.437-.637l4.925-4.925q.225-.225.5-.325t.55-.1q.3 0 .575.113t.5.337l.925.925q.2.225.313.5t.112.55t-.1.563t-.325.512l-4.925 4.925q-.275.275-.637.425t-.763.15H15q-.425 0-.712-.288T14 20m7.5-5.575l-.925-.925zm-6 5.075h.95l3.025-3.05l-.45-.475l-.475-.45l-3.05 3.025zm3.525-3.525l-.475-.45l.925.925zM12 12q-1.65 0-2.825-1.175T8 8t1.175-2.825T12 4t2.825 1.175T16 8t-1.175 2.825T12 12m0-2q.825 0 1.413-.587T14 8t-.587-1.412T12 6t-1.412.588T10 8t.588 1.413T12 10m0-2"
+        />
+      </svg>
+    </a>
+    <button
+      class="btn btn-square btn-ghost hover:bg-amber-700"
+      (click)="deleteUser(user.id)"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+      >
+        <path
+          fill="currentColor"
+          d="M7 21q-.825 0-1.412-.587T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413T17 21zm2-4h2V8H9zm4 0h2V8h-2z"
+        />
+      </svg>
+    </button>
+  </li>
+  }
+</ul>
+
+<app-alert
+  [description]="this.description()"
+  [typeAlert]="this.typeAlert()"
+></app-alert>

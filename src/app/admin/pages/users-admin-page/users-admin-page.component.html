@@ -1,0 +1,12 @@
+<h1 class="text-3xl font-bold font-montserrat mb-2">Listado de Usuarios</h1>
+
+<h3 class="font-montserrat text-lg">
+  Total de Usuarios:
+  <!-- <span class="text-accent">{{ this.productsResource.value()?.count }}</span> -->
+</h3>
+<div class="divider"></div>
+
+@if (this.usersResource.hasValue()) {
+
+<app-user-list [users]="this.usersResource.value()"></app-user-list>
+}

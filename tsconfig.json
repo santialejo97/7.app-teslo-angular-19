@@ -9,7 +9,8 @@
       "@products/*": ["./src/app/products/*"],
       "@admin/*": ["./src/app/admin/*"],
       "@store-front/*": ["./src/app/store-front/*"],
-      "@shared/*": ["./src/app/shared/*"]
+      "@shared/*": ["./src/app/shared/*"],
+      "@users/*": ["./src/app/users/*"]
     },
     "outDir": "./dist/out-tsc",
     "strict": true,

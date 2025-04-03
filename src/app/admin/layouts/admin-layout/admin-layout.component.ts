@@ -1,5 +1,10 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from '@angular/router';
 import { AuthService } from '@auth/services/auth.service';
 
 @Component({
@@ -9,5 +14,11 @@ import { AuthService } from '@auth/services/auth.service';
 })
 export class AdminLayoutComponent {
   authService = inject(AuthService);
+  router = inject(Router);
   user = computed(() => this.authService.user());
+
+  signOut() {
+    this.authService.logout();
+    this.router.navigateByUrl('/');
+  }
 }

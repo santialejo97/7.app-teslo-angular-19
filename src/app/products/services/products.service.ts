@@ -6,14 +6,9 @@ import {
   type Product,
   type ProductResponse,
 } from '@products/interfaces/product.interfaces';
+import { Options } from '@shared/interfaces/shared.interfaces';
 import { delay, Observable, of, tap, map, forkJoin, switchMap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-
-interface Options {
-  limit?: number;
-  offset?: number;
-  gender?: string;
-}
 
 const emptyProduct: Product = {
   id: 'new',
