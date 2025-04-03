@@ -1,0 +1,27 @@
+<div class="card bg-base-100 shadow-sm animate-fadeIn">
+  <figure>
+    <img
+      [src]="this.product().images | ProductImage"
+      [alt]="this.product().title"
+      class="w-[314px] h-[314px] rounded-t-2xl"
+    />
+  </figure>
+  <div class="card-body">
+    <h2
+      [routerLink]="['/product', this.product().slug]"
+      class="card-title font-montserrat text-accent text-1xl cursor-pointer hover:underline"
+    >
+      {{ this.product().title }}
+    </h2>
+    <p class="overflow-y-hidden">
+      {{ this.product().description | slice : 0 : 70 }}...
+    </p>
+    <div class="card-actions justify-end">
+      <a
+        class="link link-accent"
+        [routerLink]="['/product', this.product().slug]"
+        >Ver màs</a
+      >
+    </div>
+  </div>
+</div>

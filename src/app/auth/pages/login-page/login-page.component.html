@@ -1,0 +1,96 @@
+<form
+  class="flex flex-col gap-2"
+  [formGroup]="this.loginForm"
+  (ngSubmit)="this.onSubmit()"
+>
+  <label class="input">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <g
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+      >
+        <path
+          d="M9 10a3 3 0 1 0 6 0a3 3 0 0 0-6 0M6 21v-1a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v1"
+        />
+        <path
+          d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
+        />
+      </g>
+    </svg>
+    <input
+      type="email"
+      class="grow"
+      placeholder="Email user"
+      formControlName="email"
+    />
+  </label>
+  @if (this.formUtils.isValidField('email', loginForm)) {
+
+  <p class="text-sm text-center text-red-400 font-montserrat">
+    {{ formUtils.getFieldError("email", this.loginForm) }}
+  </p>
+  }
+
+  <label class="input">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+    >
+      <path
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M5 13a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2zm3-2V7a4 4 0 1 1 8 0v4m-1 5h.01m-3 0h.01m-3 0h.01"
+      />
+    </svg>
+    <input
+      type="password"
+      class="grow"
+      placeholder="Password user"
+      formControlName="password"
+    />
+  </label>
+
+  @if (this.formUtils.isValidField('password', loginForm)) {
+
+  <p class="text-sm text-center text-red-400 font-montserrat">
+    {{ formUtils.getFieldError("password", this.loginForm) }}
+  </p>
+  }
+
+  <hr />
+  <button
+    type="submit"
+    class="btn btn-secondary"
+    style="view-transition-name: login1"
+  >
+    Login
+  </button>
+
+  <p class="text-center text-sm font-montserrat font-extrabold text-slate-600">
+    ¿No tienes cuenta?
+    <a class="text-accent" routerLink="/auth/register">Crea una aquì</a>
+  </p>
+</form>
+
+@if (hasError()) {
+
+<app-alert
+  [typeAlert]="'error'"
+  [description]="this.descriptionError()"
+></app-alert>
+}
+
+<!-- <pre>{{ loginForm.controls["password"].errors | json }}</pre> -->

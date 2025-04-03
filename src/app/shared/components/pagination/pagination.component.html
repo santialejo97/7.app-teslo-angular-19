@@ -1,0 +1,14 @@
+<div class="join flex justify-center items-center">
+  @for (page of getPages(); track page; let c = $count) {
+  <button
+    class="join-item btn"
+    [routerLink]="[]"
+    [queryParams]="this.activePage() > c ? { page: 1 } : { page }"
+    [class.btn-primary]="page === this.activePage()"
+    (click)="this.activePage.set(page)"
+  >
+    {{ page }}
+  </button>
+
+  } @empty { }
+</div>
