@@ -52,6 +52,7 @@
               </li>
               <li>
                 <a
+                  routerLink="/admin/users"
                   class="text-base font-normal rounded-lg hover:bg-secondary hover:text-gray-900 flex items-center p-2 group"
                 >
                   <svg
@@ -94,7 +95,7 @@
               </li>
               <li>
                 <a
-                  (click)="this.authService.logout()"
+                  (click)="this.signOut()"
                   class="text-base font-normal rounded-lg hover:bg-secondary hover:text-gray-900 flex items-center p-2 group"
                 >
                   <svg
@@ -109,7 +110,7 @@
                       clip-rule="evenodd"
                     ></path>
                   </svg>
-                  <span class="ml-3 flex-1 whitespace-nowrap">Sign In</span>
+                  <span class="ml-3 flex-1 whitespace-nowrap">Sign Out</span>
                 </a>
               </li>
             </ul>

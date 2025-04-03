@@ -10,6 +10,8 @@ import { FormUtil } from '@shared/utils/form-util';
 import { JsonPipe } from '@angular/common';
 import { AuthService } from '@auth/services/auth.service';
 import { AlertComponent } from '@shared/components/alert/alert.component';
+import { Observer } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login-page',
@@ -23,6 +25,7 @@ export class LoginPageComponent {
   authService = inject(AuthService);
 
   hasError = signal(false);
+  descriptionError = signal<string>('');
 
   loginForm: FormGroup = this.formBuilder.group({
     email: [
@@ -39,6 +42,21 @@ export class LoginPageComponent {
     ],
   });
 
+  observer: Observer<boolean> = {
+    next: (isAuth) => {
+      if (isAuth) {
+        this.router.navigateByUrl('/');
+        return;
+      }
+    },
+    error: (err: HttpErrorResponse) => {
+      this.descriptionError.set(err.error.message);
+      this.hasError.set(true);
+      this.clearAlerts();
+    },
+    complete: () => {},
+  };
+
   onSubmit() {
     if (!this.loginForm.valid) {
       this.hasError.set(true);
@@ -46,14 +64,7 @@ export class LoginPageComponent {
       return;
     }
     const { email, password } = this.loginForm.value;
-    this.authService.login(email, password).subscribe((isAuth) => {
-      if (isAuth) {
-        this.router.navigateByUrl('/');
-        return;
-      }
-      this.hasError.set(true);
-      this.clearAlerts();
-    });
+    this.authService.login(email, password).subscribe(this.observer);
   }
 
   clearAlerts() {

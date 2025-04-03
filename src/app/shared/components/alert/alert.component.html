@@ -1,3 +1,5 @@
+@if(this.showAlert()){
+<!--  -->
 @if(typeAlert() == 'error'){
 <div role="alert" class="alert alert-error fixed bottom-5 right-5 w-auto">
   <svg
@@ -36,4 +38,4 @@
   </svg>
   <span>{{ description() }}</span>
 </div>
-}
+} }

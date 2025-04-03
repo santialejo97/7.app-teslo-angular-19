@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { catchError, map, Observable, of, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -35,7 +35,7 @@ export class AuthService {
 
   token = computed(this._token);
 
-  login(email: string, password: string): Observable<boolean> {
+  login(email: string, password: string): Observable<boolean | any> {
     return this.http
       .post<AuthResponse>(`${baseUrl}/auth/login`, {
         email,
@@ -48,7 +48,7 @@ export class AuthService {
         map(() => true),
         catchError((error: any) => {
           this.logout();
-          return of(false);
+          return throwError(() => error);
         })
       );
   }
