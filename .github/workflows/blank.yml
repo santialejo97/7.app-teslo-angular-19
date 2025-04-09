@@ -26,5 +26,7 @@ jobs:
         run: npm run build
 
       - name: Deploy to Github pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           npm run ng -- deploy --repo=https://github.com/santialejo97/7.app-teslo-angular-19.git --name="santialejo97" --email="gaviriasantiago1997@gmail.com" --base-href=/7.app-teslo-angular-19/
