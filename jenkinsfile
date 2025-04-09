@@ -5,7 +5,6 @@ pipeline {
         nodejs 'NodeJS'
     }
 
-
     environment {
         SONAR_SCANNER_HOME = tool 'SonarScanner'
     }
@@ -41,13 +40,12 @@ pipeline {
                 }
             }
         }
-    }
 
-    post {
-    always {
-        node('dist') {  // Esto provee el contexto de FilePath necesario
-            archiveArtifacts artifacts: 'dist/**/*', fingerprint: true
+
+        stage('Archivar Artefactos') {
+            steps {
+                archiveArtifacts artifacts: 'dist/**/*', fingerprint: true
+            }
         }
     }
-}
 }
