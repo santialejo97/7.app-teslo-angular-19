@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+
+    tools {
+        nodejs 'NodeJS'
+    }
+
+    environment {
+        SONAR_SCANNER_HOME = tool 'SonarScanner'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Instalar Dependencias') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Build Angular') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+
+        stage('Análisis SonarQube') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh '''$SONAR_SCANNER_HOME/bin/sonar-scanner \
+                        -Dsonar.projectKey=angular-app \
+                        -Dsonar.projectName="Mi App Angular" \
+                        -Dsonar.sources=src/ \
+                        -Dsonar.host.url=http://sonarqube:9000 \
+                        -Dsonar.login=$SONAR_AUTH_TOKEN'''
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: 'dist/**/*', fingerprint: true
+        }
+    }
+}
