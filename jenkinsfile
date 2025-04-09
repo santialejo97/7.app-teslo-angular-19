@@ -45,7 +45,9 @@ pipeline {
 
     post {
         always {
+            node {
             archiveArtifacts artifacts: 'dist/**/*', fingerprint: true
+        }
         }
     }
 }
