@@ -44,10 +44,10 @@ pipeline {
     }
 
     post {
-        always {
-            node {
+    always {
+        node('dist') {  // Esto provee el contexto de FilePath necesario
             archiveArtifacts artifacts: 'dist/**/*', fingerprint: true
         }
-        }
     }
+}
 }
