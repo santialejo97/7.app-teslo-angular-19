@@ -2,13 +2,29 @@ name: CD
 on:
   push:
     branches: ["develop"]
-  # pull_request:
-  #   branches: [ "main" ]
+  pull_request:
+    branches: ["develop"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
     steps:
-      - name: "Mostrar mensaje"
-        run: echo  "Hola mundo"
+      - uses: actions/checkout@v4
+      - name: "Setup Node.js"
+        uses: actions/setup-node@v4
+        with:
+          node-version: latest
+
+      - name: "Install dependencies"
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to Github pages
+        run: |
+          npm run ng -- deploy --repo=https://github.com/santialejo97/7.app-teslo-angular-19.git --name="santialejo97" --base-href=/7.app-teslo-angular-19/
