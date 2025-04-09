@@ -1,0 +1,1 @@
+import{Ha as n,Za as a,_a as p,lb as s}from"./chunk-RSTK3AZP.js";var t=class o{static \u0275fac=function(e){return new(e||o)};static \u0275cmp=n({type:o,selectors:[["app-not-found-page"]],decls:2,vars:0,template:function(e,m){e&1&&(a(0,"h1"),s(1,"Not Found Page"),p())},encapsulation:2})};export{t as default};
